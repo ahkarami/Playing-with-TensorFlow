@@ -6,7 +6,7 @@
 import tensorflow as tf
 
 # Version of TensorFlow:
-print(tf.__version__)  # 1.4.0
+print(tf.__version__)  # e.g., 1.4.0
 
 # ***** Section1 *****
 
@@ -232,3 +232,4 @@ xInput = int(input("x?: "))
 yInput = int(input("y?: "))
 print("x + y = %d" % sess.run(add, feed_dict={x: xInput, y: yInput}))
 print("x x y = %d" % sess.run(mul, feed_dict={x: xInput, y: yInput}))
+
