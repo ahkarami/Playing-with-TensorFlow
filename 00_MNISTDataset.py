@@ -15,7 +15,7 @@ import numpy as np
 
 # ***** Section1 *****
 
-print(' ***** Section1 ***** ')
+print('\n ***** Section1 ***** ')
 
 # 1- Downloading the data set
 # 2- Loading the entire data set into numpy array
@@ -40,4 +40,32 @@ print("x_train: ", x_train.shape)
 print("y_train: ", y_train.shape)
 print("x_test: ", x_test.shape)
 print("y_test: ", y_test.shape)
+
+
+# ***** Section3 *****
+
+print('\n ***** Section3 ***** ')
+
+# Data visualization:
+
+
+def plot_mnist(data, classes):
+    for i in range(10):
+        idxs = (classes == i)
+
+        # get 10 images for class i
+        images = data[idxs][0:10]
+
+        for j in range(5):
+            plt.subplot(5, 10, i + j * 10 + 1)
+            plt.imshow(images[j].reshape(28, 28), cmap='gray')
+            # print a title only once for each class
+            if j == 0:
+                plt.title(i)
+            plt.axis('off')
+    plt.show()
+
+
+classes = np.argmax(y_train, 1)
+plot_mnist(x_train, classes)
 
