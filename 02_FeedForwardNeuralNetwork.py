@@ -26,4 +26,34 @@ print("x_test: ", x_test.shape)
 print("y_test: ", y_test.shape)
 
 
+# ***** Section2 *****
+
+print('\n ***** Section2 ***** ')
+
+# Data sanity check:
+
+
+def plot_mnist(data, classes, incorrect=None):
+    for i in range(10):
+        idxs = (classes == i)
+
+        # for test: see last part of this ipython notbook file
+        if incorrect is not None:
+            idxs *= incorrect
+        # get 10 images for class i
+        images = data[idxs][0:10]
+
+        for j in range(5):
+            plt.subplot(5, 10, i + j * 10 + 1)
+            plt.imshow(images[j].reshape(28, 28), cmap='gray')
+            # print a title only once for each class
+            if j == 0:
+                plt.title(i)
+            plt.axis('off')
+    plt.show()
+
+
+classes = np.argmax(y_train, 1)
+plot_mnist(x_train, classes)
+
 
