@@ -57,3 +57,23 @@ classes = np.argmax(y_train, 1)
 plot_mnist(x_train, classes)
 
 
+# ***** Section3 *****
+
+print('\n ***** Section3 ***** ')
+
+# Fully-connected layer:
+# Implement a fully-connected layer, by using `tf.matmul` function for 2D matrix multiplication.
+
+
+def fully_connected(x, dim_in, dim_out, name):
+    with tf.variable_scope(name) as scope:
+        # create variables
+        w = tf.get_variable('w', shape=[dim_in, dim_out],
+                            initializer=tf.random_uniform_initializer(minval=-0.1, maxval=0.1))
+        b = tf.get_variable('b', shape=[dim_out])
+
+        # create operations
+        out = tf.matmul(x, w) + b
+
+        return out
+
