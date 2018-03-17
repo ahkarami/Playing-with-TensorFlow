@@ -77,3 +77,27 @@ def fully_connected(x, dim_in, dim_out, name):
 
         return out
 
+
+# ***** Section4 *****
+
+print('\n ***** Section4 ***** ')
+
+# Neural network:
+# we will develop a neural network with 2 hidden layers using a fully_connected function.
+
+
+# Create model:
+def neural_network(x, dim_in=784, dim_h=500, dim_out=10):
+    # 1st hidden layer with ReLU
+    h1 = fully_connected(x, dim_in, dim_h, name='h1')
+    h1 = tf.nn.relu(h1)
+
+    # 2nd hidden layer with ReLU
+    h2 = fully_connected(h1, dim_h, dim_h, name='h2')
+    h2 = tf.nn.relu(h2)
+
+    # output layer with linear
+    out = fully_connected(h2, dim_h, dim_out, name='out')
+
+    return out
+
