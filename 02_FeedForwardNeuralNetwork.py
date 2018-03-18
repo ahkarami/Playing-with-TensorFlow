@@ -101,3 +101,15 @@ def neural_network(x, dim_in=784, dim_h=500, dim_out=10):
 
     return out
 
+
+# ***** Section5 *****
+
+print('\n ***** Section5 ***** ')
+
+# Place holder:
+# To train the neural network with mini-batch gradient descent,
+# placeholders should be defined for mini-batch input data and target data.
+# Note: `None` type is used so that any batch size of data can be fed into the placeholder.
+x = tf.placeholder(tf.float32, [None, 784])
+y = tf.placeholder(tf.float32, [None, 10])
+
