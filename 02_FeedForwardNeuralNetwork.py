@@ -113,3 +113,16 @@ print('\n ***** Section5 ***** ')
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
 
+
+# ***** Section6 *****
+
+print('\n ***** Section6 ***** ')
+
+# Construct graph:
+# Construct model with default value
+out = neural_network(x)
+
+# Note: If one want to create 2 or more neural network must act as below:
+# tf.get_variable_scope().reuse_variables()
+# out2 = neural_network(x)
+
