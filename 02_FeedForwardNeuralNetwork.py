@@ -126,3 +126,24 @@ out = neural_network(x)
 # tf.get_variable_scope().reuse_variables()
 # out2 = neural_network(x)
 
+
+# ***** Section7 *****
+
+print('\n ***** Section7 ***** ')
+
+# Loss and optimizer:
+# Acts loss function as a tensor and optimizer as an operator.
+
+# loss and optimizer
+loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=out))
+optimizer = tf.train.RMSPropOptimizer(learning_rate=0.001).minimize(loss)
+#
+# Test model
+pred = tf.argmax(out, 1)
+target = tf.argmax(y, 1)
+
+correct_pred = tf.equal(pred, target)
+incorrect_pred = tf.not_equal(pred, target)
+# Calculate accuracy
+accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
