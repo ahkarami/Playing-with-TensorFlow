@@ -147,3 +147,53 @@ incorrect_pred = tf.not_equal(pred, target)
 # Calculate accuracy
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
+
+# ***** Section8 *****
+
+print('\n ***** Section8 ***** ')
+
+# Session: train and test model:
+# To launch our model, we will implement a session where the model is actually trained and tested on the MNIST data set.
+
+# Train Phase:
+# 1- Initialize all variables we created above.
+# 2- The most important part of code in the training phase is:
+# `sess.run([optimizer, loss], feed_dict={x: x_batch, y:y_batch})`.
+
+# Test Phase:
+# We use sess.run(accuracy, {x: mnist.test.images, y: mnist.test.labels}) to print out the test accuracy.
+# Also, sess.run([pred, incorrect_pred], {x: mnist.test.images, y: mnist.test.labels}) is used to
+# get predictions and incorrectly predicted indices of our model.
+
+batch_size = 100
+numberOfEpochs = 10
+
+# launch the graph
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+with tf.Session(config=config) as sess:
+    # initialize tensor variables
+    tf.global_variables_initializer().run()
+    # training cycle
+    for epoch in range(numberOfEpochs):
+        avg_loss = 0.
+        n_iters_per_epoch = int(mnist.train.num_examples / batch_size)
+        # loop over all batches
+        for i in range(n_iters_per_epoch):
+            x_batch, y_batch = mnist.train.next_batch(batch_size)
+            # run optimization op (backprop) and loss op (to get loss value)
+            _, c = sess.run([optimizer, loss], feed_dict={x: x_batch, y: y_batch})
+            # compute average loss
+            avg_loss += c / n_iters_per_epoch
+        print("Epoch %d, Loss: %.3f" % (epoch + 1, avg_loss))
+    print("Finished training!")
+
+    print("")
+
+    print("Test accuracy:", sess.run(accuracy, {x: mnist.test.images, y: mnist.test.labels}))
+    p, incorrect = sess.run([pred, incorrect_pred], {x: mnist.test.images, y: mnist.test.labels})
+
+    print("Incorrect Case")
+    plot_mnist(x_test, classes=p, incorrect=incorrect)  # I think this method has some bugs in some cases
+
+
