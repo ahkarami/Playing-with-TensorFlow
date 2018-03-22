@@ -197,3 +197,8 @@ with tf.Session(config=config) as sess:
     plot_mnist(x_test, classes=p, incorrect=incorrect)  # I think this method has some bugs in some cases
 
 
+# ***** Some Other Appropriate References about Using GPU with TensorFlow *****
+# 1- https://medium.com/@lisulimowicz/tensorflow-cpus-and-gpus-configuration-9c223436d4ef
+# 2- https://learningtensorflow.com/lesson10/
+
+
