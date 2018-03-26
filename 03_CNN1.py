@@ -64,3 +64,51 @@ biases = {
     'out': tf.Variable(tf.random_normal([n_classes]))
 }
 
+
+# ***** Section3 *****
+
+print('\n ***** Section3 ***** ')
+
+# Network Implementation:
+
+
+def CNN(x, weights, biases, dropout):
+    # Reshape input picture
+    x = tf.reshape(x, shape=[-1, 28, 28, 1])
+    print("Input x:               ", x.get_shape().as_list())
+
+    # 1st Convolution Layer
+    conv1 = tf.nn.conv2d(x, weights['wc1'], strides=[1, 1, 1, 1], padding='SAME')
+    print("After 1st conv:        ", conv1.get_shape().as_list())
+    conv1 = tf.nn.bias_add(conv1, biases['bc1'])
+    print("After adding bias:     ", conv1.get_shape().as_list())
+    conv1 = tf.nn.relu(conv1)
+    print("After ReLU:            ", conv1.get_shape().as_list())
+    # Max Pooling (down-sampling)
+    pool1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+    print("After 1st max_pooling: ", pool1.get_shape().as_list())
+
+    # 2nd Convolution Layer
+    conv2 = tf.nn.conv2d(pool1, weights['wc2'], strides=[1, 1, 1, 1], padding='SAME')
+    print("After 2nd conv:        ", conv2.get_shape().as_list())
+    conv2 = tf.nn.bias_add(conv2, biases['bc2'])
+    print("After adding bias:     ", conv2.get_shape().as_list())
+    conv2 = tf.nn.relu(conv2)
+    print("After ReLU:            ", conv2.get_shape().as_list())
+    # Max Pooling (down-sampling)
+    pool2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+    print("After 2nd max_pooling: ", pool2.get_shape().as_list())
+
+    # Fully connected layer
+    # Reshape conv2 output to fit fully connected layer input
+    fc1 = tf.reshape(pool2, [-1, weights['wd1'].get_shape().as_list()[0]])
+    fc1 = tf.add(tf.matmul(fc1, weights['wd1']), biases['bd1'])
+    print("Fully connected:       ", fc1.get_shape().as_list())
+    fc1 = tf.nn.relu(fc1)
+    # Apply Dropout
+    fc1 = tf.nn.dropout(fc1, dropout)
+    # Output, class prediction
+    out = tf.add(tf.matmul(fc1, weights['out']), biases['out'])
+    print("Output:                ", out.get_shape().as_list())
+    return out
+
