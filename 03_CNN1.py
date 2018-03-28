@@ -112,3 +112,24 @@ def CNN(x, weights, biases, dropout):
     print("Output:                ", out.get_shape().as_list())
     return out
 
+
+# ***** Section4 *****
+
+print('\n ***** Section4 ***** ')
+
+# Optimization:
+
+# Construct model:
+pred = CNN(x, weights, biases, keep_prob)
+
+# Define loss:
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=pred))
+
+# Define optimizer:
+# optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
+# optimizer = tf.train.AdadeltaOptimizer().minimize(cost)
+# optimizer = tf.train.AdagradOptimizer(learning_rate=learning_rate).minimize(cost)
+# optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.5).minimize(cost)
+# optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(cost)
+
