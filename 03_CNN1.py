@@ -133,3 +133,44 @@ cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=p
 # optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate).minimize(cost)
 
+
+# ***** Section5 *****
+
+print('\n ***** Section5 ***** ')
+
+# Performance metric:
+
+# Find correct prediction
+correct_pred = tf.equal(tf.argmax(pred,1), tf.argmax(y,1))
+# Get accuracy
+accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+# initialize variables
+init = tf.global_variables_initializer()
+
+# Configure GPU Options:
+gpu_options = tf.GPUOptions(allow_growth=True, per_process_gpu_memory_fraction=0.1)
+config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True,
+                        gpu_options=gpu_options)
+
+# apply config when starting session:
+sess = tf.InteractiveSession(config=config)
+init.run()
+step = 1
+
+while step * batch_size < training_iters:
+    batch_x, batch_y = mnist.train.next_batch(batch_size)
+    # Run optimization
+    sess.run(optimizer, feed_dict={x: batch_x, y: batch_y, keep_prob: dropout})
+    if step % display_step == 0:
+        # Calculate batch loss and accuracy
+        loss, acc = sess.run([cost, accuracy], feed_dict={x: batch_x,
+                                                          y: batch_y,
+                                                          keep_prob: 1.})
+        print("Iter " + str(step*batch_size) + ", Minibatch Loss= " + \
+              "{:.6f}".format(loss) + ", Training Accuracy= " + \
+              "{:.5f}".format(acc))
+    step += 1
+print("Optimization Finished!")
+
+
