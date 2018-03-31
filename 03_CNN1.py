@@ -174,3 +174,13 @@ while step * batch_size < training_iters:
 print("Optimization Finished!")
 
 
+# ***** Section6 *****
+
+print('\n ***** Section6 ***** ')
+
+# Calculate accuracy for 256 mnist test images:
+print("Testing Accuracy:",
+      sess.run(accuracy, feed_dict={x: mnist.test.images[:256],
+                                    y: mnist.test.labels[:256],
+                                    keep_prob: 1.}))
+
