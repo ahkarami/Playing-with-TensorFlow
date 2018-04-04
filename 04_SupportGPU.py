@@ -24,4 +24,12 @@ with tf.device('/gpu:0'):
 with tf.Session() as sess:
     print(sess.run(c))
 
-	
+
+# ***** Section2 *****
+
+print('\n ***** Section2 ***** ')
+
+# Approach2:
+# This code should give you all devices available to tensorFlow.
+print(device_lib.list_local_devices())
+
