@@ -1,6 +1,8 @@
 # Playing-with-TensorFlow
 This repository shows my history of TensorFlow learning.
 
+![Logo](./Logo.png)
+
 ## Content:
 ### Elementary
 00. [Introduction to MNIST dataset](https://github.com/ahkarami/Playing-with-TensorFlow/blob/master/00_MNISTDataset.py) - Download and visualize MNIST dataset
