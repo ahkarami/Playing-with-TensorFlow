@@ -1,7 +1,9 @@
 # Playing-with-TensorFlow
 This repository shows my history of TensorFlow learning.
 
-![Logo](./Logo.png)
+<p align="center">
+  <img src="./Logo.png?raw=true" alt="Logo"/>
+</p>
 
 ## Content:
 ### Elementary
