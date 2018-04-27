@@ -78,3 +78,41 @@ correct_pred = tf.equal(pred, target)
 # Calculate accuracy
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
+
+# ***** Section3 *****
+
+print('\n ***** Section3 ***** ')
+
+# Save Variables:
+
+batch_size = 100
+save_every = 1
+
+if not os.path.exists('model/'):
+    os.makedirs('model/')
+
+# launch the graph
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+with tf.Session(config=config) as sess:
+    # initialize tensor variables
+    tf.global_variables_initializer().run()
+    saver = tf.train.Saver(max_to_keep=20)  # Important part for saving the model
+    # training cycle
+    for epoch in range(1):
+        avg_loss = 0.
+        n_iters_per_epoch = int(mnist.train.num_examples / batch_size)
+        # loop over all batches
+        for i in range(n_iters_per_epoch):
+            x_batch, y_batch = mnist.train.next_batch(batch_size)
+            # run optimization op (backprop) and loss op (to get loss value)
+            _, c = sess.run([optimizer, loss], feed_dict={x: x_batch, y: y_batch})
+            # compute average loss
+            avg_loss += c / n_iters_per_epoch
+        print("Epoch %d, Loss: %.3f" % (epoch + 1, avg_loss))
+        if epoch % save_every == 0:
+            saver.save(sess, save_path='model/fc', global_step=epoch + 1)  # Saving
+
+    print("Finished training!")
+    print("\nTest accuracy:", sess.run(accuracy, {x: mnist.test.images, y: mnist.test.labels}))
+
